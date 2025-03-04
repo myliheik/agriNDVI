@@ -126,9 +126,11 @@ def savingParcels(kasvulohkot, out_dir_path, year):
     outputfile2 = os.path.join(out_dir_path, 'parcels-' + str(year) + '.csv')  
 
     print(f'Saving geometries to {outputfile}')           
-    kasvulohkot[['parcelID', 'geometry']].to_file(driver = 'ESRI Shapefile', filename = outputfile)
+    #kasvulohkot[['parcelID', 'geometry']].to_file(driver = 'ESRI Shapefile', filename = outputfile)
     
     print(f'Saving metafiles to {outputfile2}') 
+    # append plant name:    
+    kasvulohkot['plant_name'] = kasvulohkot['plant_ID'].map(kasviDict)    
     kasvulohkot.drop(columns = ['geometry']).to_csv(outputfile2, index = False)
 
     print('ParcelID is in format: YEAR_kasvulohkoID_peruslohkoID_CROPTYPE. Area is in hectares.')
