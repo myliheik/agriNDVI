@@ -45,7 +45,7 @@ def reshapeAndSave(filepath, outputfile, indexi):
     pivoted1 = final[['parcelID', 'doy', indexi]].pivot(index = 'parcelID', columns = 'doy', values = indexi).reset_index()
     pivoted1['parcelID2'] = pivoted1['parcelID'].str.rsplit('_', n = 1).str[0] # drop 'tile'
     pivoted11 = round(pivoted1.groupby('parcelID2').mean(numeric_only = True).reset_index(), 3)
-
+    pivoted11.rename(columns={'parcelID2': 'parcelID'}, inplace = True)
     print(pivoted11.head())
     
     print(f"Output {indexi} in file: {outputfile}")
@@ -55,10 +55,10 @@ def reshapeAndSave(filepath, outputfile, indexi):
         pivoted2 = final[['parcelID', 'doy', 'std']].pivot(index = 'parcelID', columns = 'doy', values = 'std').reset_index()
         pivoted2['parcelID2'] = pivoted2['parcelID'].str.rsplit('_', n = 1).str[0] # drop 'tile'
         pivoted22 = round(pivoted2.groupby('parcelID2').mean(numeric_only = True).reset_index(), 3)
-        
+        pivoted22.rename(columns={'parcelID2': 'parcelID'}, inplace = True)
         print(pivoted22.head())
         
-        outputfile2 = outputfile.replace(indexi, 'std')
+        outputfile2 = outputfile.replace('mean', 'std')
         print(f"Output std in file: {outputfile2}")
         pivoted22.to_csv(outputfile2, index = False)     
         
@@ -92,7 +92,7 @@ def main(args):
         for year in years:
         
             inputfile = args.index + '_' + year + '.pkl'
-            outputfile = args.index + '_' + year + '.csv'
+            outputfile = args.index + '_mean_' + year + '.csv'
             reshapeAndSave(os.path.join(args.inputdir, inputfile), os.path.join(out_dir_path, outputfile), args.index)
         
 

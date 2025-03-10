@@ -96,7 +96,7 @@ def getAttributesFromFilename(datadir, data_folder2, vindex):
     # Loop files in data_folder
     for filename in os.listdir(datadir):
         if filename.endswith('.csv') and filename.startswith(str.lower(vindex) + '_'):
-            print(filename)
+            #print(filename)
             try:
                 df = pd.read_csv(os.path.join(datadir,filename), encoding='utf-8', header = None)
             except pd.errors.EmptyDataError:
@@ -109,7 +109,7 @@ def getAttributesFromFilename(datadir, data_folder2, vindex):
             #print(doy)
             df['band'] = filename.split("_")[3].replace(".csv","")
             #print(band)
-            print(df)
+            #print(df)
             ### Write to data_folder2
             df.to_csv(os.path.join(data_folder2, filename), encoding='utf-8',index=False, header=False)
             
@@ -149,7 +149,7 @@ def addDOYrank(all_files_df, out_dir_path, outputfile):
     #print(all_files_df.head())
     days = all_files_df.doy.sort_values().unique()
     days_dict = dict(zip(days, range(len(days))))
-    print(days_dict)
+    #print(days_dict)
     all_files_df2 = all_files_df
     return all_files_df2
     
