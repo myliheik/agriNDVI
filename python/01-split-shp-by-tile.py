@@ -11,6 +11,11 @@ python 01-split-shp-by-tile.py --s2tiles /Users/myliheik/Documents/GISdata/senti
 --outshpdir /Users/myliheik/Documents/myNDVI/agriNDVI/shp/shpPerTile/ \
 --out_file /Users/myliheik/Documents/myNDVI/agriNDVI/shp/parcelIDtile.tsv
 
+python 01-split-shp-by-tile.py --s2tiles /Users/myliheik/Documents/GISdata/sentinel2_tiles_world/suomiTiles.shp \
+--fullshapefile /Users/myliheik/Documents/myNDVI/agriNDVI/shp/parcels-2022.shp  \
+--outshpdir /Users/myliheik/Documents/myNDVI/agriNDVI/shp/shpPerTile/ \
+--out_file /Users/myliheik/Documents/myNDVI/agriNDVI/shp/parcelIDtile.tsv
+
 Note: this may help if GDAL fails: 
 export GDAL_DATA=/Users/myliheik/anaconda3/envs/myGIS/share/gdal
 

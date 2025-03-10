@@ -23,6 +23,21 @@ python 00-preprocessing.py -i /Users/myliheik/Documents/GISdata/Kasvulohkot2023/
 -t VEM VEN VFM VFN VER VEQ VFR VFQ \
 -o /Users/myliheik/Documents/myNDVI/agriNDVI/shp -g 0.2
 
+python 00-preprocessing.py -i /Users/myliheik/Documents/GISdata/Kasvulohkot2022/kasvulohkot2022-mod.shp \
+-s /Users/myliheik/Documents/GISdata/sentinel2_tiles_world/suomiTiles.shp \
+-t VEM VEN VFM VFN VER VEQ VFR VFQ \
+-o /Users/myliheik/Documents/myNDVI/agriNDVI/shp -g 0.2
+
+python 00-preprocessing.py -i /Users/myliheik/Documents/GISdata/Kasvulohkot2021/kasvulohkot2021-mod.shp \
+-s /Users/myliheik/Documents/GISdata/sentinel2_tiles_world/suomiTiles.shp \
+-t VEM VEN VFM VFN VER VEQ VFR VFQ \
+-o /Users/myliheik/Documents/myNDVI/agriNDVI/shp -g 0.2
+
+python 00-preprocessing.py -i /Users/myliheik/Documents/GISdata/Kasvulohkot2020/kasvulohkot2020-mod.shp \
+-s /Users/myliheik/Documents/GISdata/sentinel2_tiles_world/suomiTiles.shp \
+-t VEM VEN VFM VFN VER VEQ VFR VFQ \
+-o /Users/myliheik/Documents/myNDVI/agriNDVI/shp -g 0.2
+
 """
 
 
@@ -51,7 +66,8 @@ with open('/Users/myliheik/Documents/myCROPMAPPING/data/kasviDict.pkl', 'rb') as
 
 def readLPIS(fpkasvu, FILTERED_OUT):
     kasvulohko = gpd.read_file(fpkasvu)
-    kasvulohko.rename(columns={"PLVUOSI_PERUSLOHKOTUNNUS": "PLOHKO", "KVI_KASVIKOODI": "KASVIKOODI", "KVI_KASVIK": "KASVIKOODI", "MAATILA_TUNNUS": "MAATILA_TU", "KLILM_TUNN": "KLILM_TUNNUS"
+    print(kasvulohko.columns)
+    kasvulohko.rename(columns={"PLVUOSI_PERUSLOHKOTUNNUS": "PLOHKO", "KVI_KASVIKOODI": "KASVIKOODI", "KVI_KASVIK": "KASVIKOODI", "MAATILA_TUNNUS": "MAATILA_TU", "KLILM_TUNN": "KLILM_TUNNUS", "PLVUOSI_PE": "PLOHKO"
                               }, inplace=True)
 
     year = str(kasvulohko['VUOSI'][0])
@@ -126,7 +142,7 @@ def savingParcels(kasvulohkot, out_dir_path, year):
     outputfile2 = os.path.join(out_dir_path, 'parcels-' + str(year) + '.csv')  
 
     print(f'Saving geometries to {outputfile}')           
-    #kasvulohkot[['parcelID', 'geometry']].to_file(driver = 'ESRI Shapefile', filename = outputfile)
+    kasvulohkot[['parcelID', 'geometry']].to_file(driver = 'ESRI Shapefile', filename = outputfile)
     
     print(f'Saving metafiles to {outputfile2}') 
     # append plant name:    
